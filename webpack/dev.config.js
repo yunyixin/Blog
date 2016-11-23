@@ -10,15 +10,15 @@ const providePlugin = require('webpack/lib/ProvidePlugin');
 const path = require('path');
 
 /*const devFlagPlugin = new webpack.DefinePlugin({
-  _DEV_: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-});*/
+ _DEV_: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+ });*/
 
 module.exports = {
   devtool: 'inline-source-map',
 
   entry: {
-    app: './src/index.js',
-    vendor: ['./src/vendor.js']
+    app: '../src/index.js',
+    vendor: ['../src/vendor.js']
   },
 
   output: {
@@ -27,9 +27,9 @@ module.exports = {
   },
 
   /*resolve: {
-    extensions: ['.js', '.scss', '.json'],
-    modules: [path.resolve(__dirname, '../src'), 'node_modules']
-  },*/
+   extensions: ['.js', '.scss', '.json'],
+   modules: [path.resolve(__dirname, '../src'), 'node_modules']
+   },*/
 
   module: {
     loaders: [
@@ -38,6 +38,14 @@ module.exports = {
         exclude: /node_modules/,
         loaders: ['babel-loader','eslint-loader']
       },
+      /*{
+       test: /\.js?$/,
+       exclude: /node_modules/,
+       loader: 'babel',
+       query: {
+       presets: ['es2015', 'react']
+       }
+       },*/
       {
         test: /\.css$/,
         loaders: 'style-loader!css-loader!postcss-loader'
@@ -52,7 +60,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader?modules', 'postcss-loader', 'sass-loader']
+        loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
       }
     ]
   },
@@ -69,8 +77,8 @@ module.exports = {
     }),
     new htmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, './static/index.html'),
-      favicon: path.resolve(__dirname, './static/favicon.jpg')
+      template: path.resolve(__dirname, '../static/index.html'),
+      favicon: path.resolve(__dirname, '../static/favicon.jpg')
     }),
     new openBrowserPlugin({
       url: 'http://localhost:8080'
@@ -80,12 +88,12 @@ module.exports = {
       minChunks: Infinity
     })
     /*new LoaderOptionsPlugin({
-      options: {
-       postcss: function() {
-         return [autoprefixer];
-       }
-      }
-    })*/
+     options: {
+     postcss: function() {
+     return [autoprefixer];
+     }
+     }
+     })*/
   ],
 
   "eslintConfig": {

@@ -8,7 +8,7 @@ if (_DEV_) {
 */
 
 const main = () => {
-  ReactDom.render(Register, document.querySelector('#root'));
+  ReactDom.render(<Register/>, document.querySelector('#root'));
 };
 
 document.addEventListener('DOMContentLoaded', main);
