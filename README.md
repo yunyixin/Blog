@@ -2,7 +2,7 @@
 this is my first blog for own use
 
 #Installation
-   $ npm install
+   $ npm install  or yarn
    
 #Development
    $ npm start

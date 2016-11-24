@@ -8,26 +8,30 @@ export class Item extends React.Component {
     id: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
-    prompt: PropTypes.string
+    prompt: PropTypes.Object
   };
 
   static defaultProps = {
     id: 'username',
     label: '请输入用户名',
     placeholder: '3-6个字符',
-    prompt: '用户名无效'
+    prompt: {show: true, label: '用户名无效'}
   };
 
 
   render() {
-    const {id, label, placeholder, prompt} = this.props.data;
+    const {id, value, label, placeholder, prompt} = this.props.data;
+    const {handleInput} = this.props;
 
     return (
       <FormGroup controlId={id} className={styles.item}>
         <ControlLabel>{label}</ControlLabel>
-        <FormControl type="text" placeholder={placeholder}/>
+        <FormControl type="text" placeholder={placeholder} value={value}
+                     onChange={(e) => handleInput(e, id)}/>
         <FormControl.Feedback />
-        <HelpBlock>{prompt}</HelpBlock>
+        {
+          prompt.show ? <HelpBlock className={styles.help}>{prompt.label}</HelpBlock> : ''
+        }
       </FormGroup>
     );
   }
