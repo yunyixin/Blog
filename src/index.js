@@ -1,5 +1,5 @@
-import ReactDom from 'react-dom';
-import {Register} from './register/register';
+import ReactDOM from 'react-dom';
+import App from './routes';
 
 /*
 if (_DEV_) {
@@ -7,8 +7,10 @@ if (_DEV_) {
 }
 */
 
+// require('./routes')
+
 const main = () => {
-  ReactDom.render(<Register/>, document.querySelector('#root'));
+  ReactDOM.render(App, document.querySelector('#root'));
 };
 
 document.addEventListener('DOMContentLoaded', main);

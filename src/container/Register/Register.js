@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import {Item} from '../components';
-import * as styles from './register.scss';
+import {Item} from '../../components';
+import * as styles from './Register.scss';
 
 export class Register extends React.Component {
 

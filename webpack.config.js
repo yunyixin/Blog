@@ -1,4 +1,3 @@
-
 // webpack plugins
 // const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const webpack = require('webpack');
@@ -8,10 +7,11 @@ const definePlugin = require('webpack/lib/DefinePlugin');
 const commonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const providePlugin = require('webpack/lib/ProvidePlugin');
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 
 /*const devFlagPlugin = new webpack.DefinePlugin({
-  _DEV_: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-});*/
+ _DEV_: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+ });*/
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -26,33 +26,43 @@ module.exports = {
     filename: '[name].js'
   },
 
-  /*resolve: {
+  resolve: {
     extensions: ['.js', '.scss', '.json'],
-    modules: [path.resolve(__dirname, '../src'), 'node_modules']
-  },*/
+    modules: ['node_modules', 'src']
+  },
 
   module: {
-    loaders: [
+    rules: [
+
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader','eslint-loader']
+        use: ['babel-loader', 'eslint-loader']
       },
-      {
-        test: /\.css$/,
-        loaders: 'style-loader!css-loader!postcss-loader'
-      },
+      /* {
+       test: /\.css$/,
+       use: 'style-loader!css-loader!postcss-loader'
+       },*/
       {
         test: /\.json$/,
-        loader: 'json-loader'
+        use: 'json-loader'
       },
       {
         test: /\.(png|jpg)$/,
-        loader: 'url-loader?limit=10240&mimetype=image/png'
+        use: 'url-loader?limit=10240&mimetype=image/png'
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader?modules', 'postcss-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader?modules',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: function () {
+                return [autoprefixer];
+              }
+            }
+          },
+          'sass-loader']
       }
     ]
   },
@@ -76,23 +86,23 @@ module.exports = {
       url: 'http://localhost:8080'
     }),
     new commonsChunkPlugin({
-      name: ['app','vendor'],
+      name: ['app', 'vendor'],
       minChunks: Infinity
     })
     /*new LoaderOptionsPlugin({
-      options: {
-       postcss: function() {
-         return [autoprefixer];
-       }
-      }
-    })*/
+     options: {
+     postcss: function() {
+     return [autoprefixer];
+     }
+     }
+     })*/
   ],
 
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "node": true
-    }
-  }
+  /* "eslintConfig": {
+   "env": {
+   "browser": true,
+   "node": true
+   }
+   }*/
 
 };
